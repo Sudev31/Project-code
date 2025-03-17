@@ -77,17 +77,22 @@ from tensorflow.keras.layers import LayerNormalization
 model = Sequential([
     tf.keras.Input(shape=(4,)),
 
-    Dense(4, activation='relu'),
-
-
-    Dense(2, activation='relu'),
-
-    Dense(2, activation='softmax'),
-
+    Dense(4, activation='relu', kernel_regularizer=l2(0.001)),  # L2 regularization
+    Dense(2, activation='relu', kernel_regularizer=l2(0.001)),  # L1 regularization
+    Dense(2, activation='softmax', kernel_regularizer=l2(0.001))  # Combined L1 & L2
 ])
+"""
+def custom_loss(y_true, y_pred):
+    # Ensure y_true is in integer format
+    y_true = tf.cast(y_true, tf.int32)
 
+    # Compute sparse categorical cross-entropy loss
+    loss = tf.keras.losses.sparse_categorical_crossentropy(y_true, y_pred, from_logits=False)
 
+    # Ignore very small losses to prevent unnecessary updates (optional)
+    return tf.where(loss < 0, 0.0, loss)
 # Compile the model
+"""
 model.compile(
     loss=tf.keras.losses.SparseCategoricalCrossentropy(),  # Use sparse labels (integer form)
     optimizer=tf.keras.optimizers.Adam(0.01),
@@ -102,11 +107,13 @@ print(r)
 # Train the model
 history = model.fit(
     X_train, r,  # Sparse labels (integer form)
-    epochs=50,
+    epochs=100,
     verbose=1
 )
-#X_test = np.array([[1,1,1,2]])
-#X_test = np.array([[ 0.21678089,  0.57143985,  0.78722658, -0.96791967]])
+
+
+"""
+
 predictions = np.zeros(s-3)
 for k in range(s-3):
   X = x[k:k+4]
@@ -216,18 +223,7 @@ for l in range(len(X_main)-2*(p-1)-1):
   plt.ylabel("y")
 
 
-
-
-
-
-
 plt.legend()
 plt.grid(True)
 plt.show()
-
-
-
-
-
-
-
+"""

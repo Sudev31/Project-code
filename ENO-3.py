@@ -79,19 +79,17 @@ model = Sequential([
 
     Dense(4, activation='relu',
           kernel_initializer=tf.keras.initializers.Constant(W1),
-          bias_initializer=tf.keras.initializers.Zeros(),
-          trainable=False),
+          bias_initializer=tf.keras.initializers.Zeros()),
 
 
     Dense(2, activation='relu',
           kernel_initializer=tf.keras.initializers.Constant(W2),
-          bias_initializer=tf.keras.initializers.Zeros(),
-          trainable=False),
+          bias_initializer=tf.keras.initializers.Zeros()
+          ),
 
     Dense(2, activation='softmax',
           kernel_initializer=tf.keras.initializers.Constant(W3),
-          bias_initializer=tf.keras.initializers.Zeros(),
-          trainable=False, name='dense_2'),
+          bias_initializer=tf.keras.initializers.Zeros(),name='dense_2'),
 
 ])
 
