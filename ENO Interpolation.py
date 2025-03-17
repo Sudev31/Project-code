@@ -65,7 +65,7 @@ for l in range(len(X_main)-2*(p-1)-1):
       t = 1
   plt.plot(x, y, color="blue")
   plt.scatter(X, Y, color="red")  # Mark the given points
-  plt.title("Lagrange Interpolation (Degree 2)")
+  plt.title(f"ENO interpolation (Degree {p})")
   plt.xlabel("x")
   plt.ylabel("y")
 
