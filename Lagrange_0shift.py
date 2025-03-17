@@ -1,4 +1,4 @@
-#as we wanna do eno for degree = 2, let us implement lagrange interpolation for degree 2 only
+#as we want to do eno for degree = 2, let us implement lagrange interpolation for degree 2 only
 
 #given {x_0,x_1,x_2} we want to interpolate a deg 2 polynomial through it
 
