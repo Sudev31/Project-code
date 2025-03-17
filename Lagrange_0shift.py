@@ -2,7 +2,7 @@
 
 #given {x_0,x_1,x_2} we want to interpolate a deg 2 polynomial through it
 
-#if deg is fixed, we can define th elagrange polynomial directly
+#if deg is fixed, we can define the lagrange polynomial directly
 import matplotlib.pyplot as plt
 import numpy as np
 
