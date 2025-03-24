@@ -83,6 +83,8 @@ training_mse = history.history['loss']
 plt.plot(range(1, e+1), training_mse, label='Training MSE')
 plt.show()
 
+"""
+Here I am using the above model to predict the p=6 stencil shift for other functions, namely heaviside function and mod(x) function.
 
 s = 600
 X_main = np.linspace(-1, 1, s) 
@@ -237,4 +239,4 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
-
+"""
