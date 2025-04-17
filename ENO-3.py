@@ -20,9 +20,9 @@ r=np.zeros(s-3, dtype=int)
 for k in range(s-3):
   X = x[k:k+4] # X is now correctly defined within the loop
   for i in range(4):
-    if (X[i]>0.5):
+    if (X[i]>=0.5):
       Y[i]=1
-    elif (X[i]<-0.5):
+    elif (X[i]<=-0.5):
       Y[i]=-1
     elif(X[i] == 0):
       Y[i]=0
@@ -68,10 +68,6 @@ W3 = np.array([
 ])
 W3 = W3.T  # Transpose (6,3)
 
-
-
-
-
 from tensorflow.keras.layers import LayerNormalization
 
 model = Sequential([
@@ -79,18 +75,13 @@ model = Sequential([
 
     Dense(4, activation='relu',
           kernel_initializer=tf.keras.initializers.Constant(W1),
-          bias_initializer=tf.keras.initializers.Zeros()),
+          bias_initializer=tf.keras.initializers.Zeros(),trainable=False),
 
-
-    Dense(2, activation='relu',
-          kernel_initializer=tf.keras.initializers.Constant(W2),
-          bias_initializer=tf.keras.initializers.Zeros()
-          ),
 
     Dense(2, activation='softmax',
-          kernel_initializer=tf.keras.initializers.Constant(W3),
-          bias_initializer=tf.keras.initializers.Zeros(),name='dense_2'),
-
+          kernel_initializer=tf.keras.initializers.Constant(W2),
+          bias_initializer=tf.keras.initializers.Zeros(),trainable=False
+          ),
 ])
 
 
@@ -103,8 +94,6 @@ model.compile(
 
 # Check model summary
 model.summary()
-
-
 print(r)
 # Train the model
 history = model.fit(
@@ -112,8 +101,7 @@ history = model.fit(
     epochs=50,
     verbose=1
 )
-#X_test = np.array([[1,1,1,2]])
-#X_test = np.array([[ 0.21678089,  0.57143985,  0.78722658, -0.96791967]])
+
 predictions = np.zeros(s-3)
 for k in range(s-3):
   X = x[k:k+4]
@@ -128,14 +116,8 @@ for k in range(s-3):
       Y[i] = np.sin(1/X[i])
     X_test = Y.reshape(1, -1)
 
-
-
-#[ 0.21678089  0.57143985  0.78722658 -0.96791967]
   Y_test = np.array([r[k]])
-#X_test = np.array([[-0.14987721,  0.14987721,  0.05012701, -0.61185789,  0.41442139,  0.8575468 ]])
-#Y_test = np.array([2])
-#X_test = np.array([[0.41442139, 0.8575468,  1,        1,         1,        1]])  # Test stencil
-#Y_test = np.array([0])  # True class for this stencil
+
   predictions[k] = np.argmax(model.predict(X_test)) # Get the class with highest probability
 temp = 0
 for i in range(len(r)):  # Use len(r) instead of hardcoding 193
@@ -164,20 +146,11 @@ for i in range(len(X_main)):
   else:
     Y_main[i] = np.sin(1/X_main[i])
 
-
-p = 3
- #deg+1 in here
+p = 3 #deg+1 in here
 n = p+(p-2)
-#for i in range(3):
-#    X.append(float(input()))
-#    Y.append(float(input()))
-
-#update r formula in the other code previous one
 r=np.zeros(len(X_main)-2*p+3, dtype=int)
 
 for k in range(len(X_main)-2*p+3):
-
-
   X = X_main[k:k+(p+(p-2))]
   Y = Y_main[k:k+(p+(p-2))]
   D = np.zeros((p, n))
@@ -218,23 +191,83 @@ for l in range(len(X_main)-2*(p-1)-1):
       t = 1
   plt.plot(x, y, color="blue")
   plt.scatter(X, Y, color="red")  # Mark the given points
-  plt.title("NN ENO (Degree 2)")
+  plt.title("ENO-3 Interpolation")
+  plt.xlabel("x")
+  plt.ylabel("y")
+plt.legend()
+plt.grid(True)
+plt.savefig("plot.pdf", format="pdf", bbox_inches="tight")
+plt.show()
+
+
+
+s = 600
+X_main = np.linspace(-1, 1, s) 
+Y = np.zeros(4)  
+predictions = np.zeros(s - 3)
+
+for k in range(s-3):  
+    X = X_main[k:k+4]  
+    for i in range(4):
+        if X[i] > 0:
+            Y[i] = 1
+        elif X[i] < 0:
+            Y[i] = -1
+        else:
+            Y[i] = 1
+    X_test = Y.reshape(1, -1)
+    predictions[k] = np.argmax(model.predict(X_test))  # Printing Y in both iterations
+print(predictions)
+X_main = np.linspace(-1,1,s)
+Y_main = np.zeros(s)
+
+for i in range(len(X_main)):
+  if X_main[i]>0:
+    Y_main[i]=1
+  elif X_main[i]<0:
+    Y_main[i]=-1
+  else:
+    Y_main[i] = 1  
+  
+
+p = 3
+ #deg+1 in here
+n = p+(p-2)
+#for i in range(3):
+#    X.append(float(input()))
+#    Y.append(float(input()))
+
+#update r formula in the other code previous one
+r = predictions
+r = np.round(predictions).astype(int)
+n = 900
+p=p-1
+y = np.zeros(n)
+t = 1
+for l in range(len(X_main)-2*(p-1)-1):
+  x = np.linspace(X_main[(p-1)+l],X_main[p+l],n)
+  X = X_main[l+(p-1)-r[l]:l+2*p-r[l]]  #[2:5]  [1:4]
+  Y = Y_main[l+(p-1)-r[l]:l+2*p-r[l]]
+  y = np.zeros(n)
+  for i in range(n):
+    for j in range(len(X)):
+      t =1
+      for k in range(1,len(X)):
+        t = t* (x[i] - X[(j+k)%(p+1)])/(X[j] - X[(j+k)%(p+1)])
+      y[i] = y[i] + t*Y[j]
+      t = 1
+  plt.plot(x, y, color="blue")
+  plt.scatter(X, Y, color="red")  # Mark the given points
+  plt.title("ENO-3 Interpolation (Degree 2)")
   plt.xlabel("x")
   plt.ylabel("y")
 
 
 
 
-
-
-
 plt.legend()
 plt.grid(True)
+plt.savefig("plot1.pdf", format="pdf", bbox_inches="tight")
 plt.show()
-
-
-
-
-
 
 

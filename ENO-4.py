@@ -131,5 +131,5 @@ print(r)
 history = model.fit(
     X_train, r,  # Sparse labels (integer form)
     epochs=50,
-    verbose=1
+    verbose=1, shuffle=False
 )
