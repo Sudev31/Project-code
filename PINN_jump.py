@@ -265,4 +265,13 @@ for i, t in enumerate(time_steps):
     plt.tight_layout()
     filename = f"solution_jump_t{t:.2f}.pdf"
     plt.savefig(filename, format='pdf', dpi=600, bbox_inches='tight')
+    plt.tight_layout()
+    filename = f"solution_t{t:.2f}.pdf"
+    plt.savefig(filename, format='pdf', dpi=600, bbox_inches='tight')
+    fname1 = f'exact_t{t:.2f}.txt'
+    np.savetxt(fname1, np.column_stack([X, exact]))
+    fname2 = f'ftbs_t{t:.2f}.txt'
+    np.savetxt(fname2, np.column_stack([x_domain, u_t_4]))
+    fname3 = f'pinn_t{t:.2f}.txt'
+    np.savetxt(fname3, np.column_stack([X, Z.flatten()]))  # Ensure Z is flattened
     plt.close(fig)
