@@ -1,6 +1,6 @@
 # Project: Numerical Solution of Scalar Advection Equations
 
-This repository contains various codes related to the numerical solution of **1D and 2D scalar advection equations**, using both traditional numerical methods and **Physics-Informed Neural Networks (PINNs)**.
+This repository contains various codes related to the numerical solution of **1D and 2D scalar and variable advection equations**, using both traditional numerical methods and **Physics-Informed Neural Networks (PINNs)**.
 
 ## Contents
 
