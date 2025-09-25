@@ -76,6 +76,7 @@ set_plot_style()
 plot_time = np.linspace(0, 1, 51)
 
 for t in plot_time:
+    
     if np.isclose(t, 0.0):                         # <-- Fix float comparison
         plot_init_vtk(f"pinn_t{t:.2f}.vtk", t)
         wait = input("Press enter to continue ")
