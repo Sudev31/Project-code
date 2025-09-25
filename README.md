@@ -21,6 +21,7 @@ Install the necessary Python packages with:
 
 ```bash
 pip install -r requirements.txt
+```
 
 ---
 
