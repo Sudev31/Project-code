@@ -10,8 +10,7 @@ Usage:
   python pinn_1d_jump.py
 Notes / Warnings:
   - PINNs often struggle to approximate discontinuities; results may show smoothing
-    near the jump. Use the FTBS solution for more reliable shock propagation.
-  - The FTBS CFL value must be chosen carefully (CFL <= 1 for stability here).
+    near the jump. The purpose is to demonstrate the same
 """
 
 import numpy as np
