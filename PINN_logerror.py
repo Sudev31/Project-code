@@ -1,3 +1,18 @@
+"""
+convergence_PINN_3D.py
+
+Convergence sweep for a 3D PINN (x, y, t). For each resolution p in {10,20,30,40,50}:
+ - build collocation grid (N = p**3),
+ - assemble BC and IC samples (using analytic solution u_e),
+ - train a PINN (PDE residual + BC + IC),
+ - time the training,
+ - compute average L1 error across several time snapshots,
+ - append results to 'convergence_PINN_table.txt' as: 1/N, h, Time, L1_Error.
+
+Notes:
+ - h is computed as grid spacing = (X_max - X_min) / (p - 1).
+"""
+
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
