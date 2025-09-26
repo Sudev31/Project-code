@@ -1,3 +1,25 @@
+"""
+plot_error_from_plt.py
+
+Read a PLT-like CSV file with a 3-line header (third line contains SOLUTIONTIME),
+compute the pointwise absolute error against a known analytical solution, and
+save a filled-contour plot of the error.
+
+Expected input file format (after 3 header lines):
+    x,y,value
+    x,y,value
+    ...
+
+Usage:
+    python plot_error_from_plt.py path/to/solution.plt figures/error_t.png
+
+Notes:
+- The analytical solution used here is u_e(x,y,t) = sin(2π(x - t)) * sin(2π(y - t)).
+  Make sure the numerical solution in the file uses the same normalization/units.
+- The script grids scattered points by unique x and y values; it assumes the
+  data lives on a rectilinear grid (same set of x values for each y row).
+"""
+
 import numpy as np
 from scipy.interpolate import griddata
 import matplotlib.pyplot as plt
