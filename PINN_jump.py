@@ -1,3 +1,19 @@
+"""
+Trained a 1D PINN for the transport equation u_t + k u_x = 0 with a discontinuous
+(square-wave) initial condition. Compared the PINN solution with a FTBS solver
+and the analytical shifted initial-condition solution. Produces:
+  - heatmap of PINN prediction
+  - heatmap of analytical solution
+  - heatmap of absolute error
+  - time-slice comparison plots (PINN vs FTBS vs exact)
+Usage:
+  python pinn_1d_jump.py
+Notes / Warnings:
+  - PINNs often struggle to approximate discontinuities; results may show smoothing
+    near the jump. Use the FTBS solution for more reliable shock propagation.
+  - The FTBS CFL value must be chosen carefully (CFL <= 1 for stability here).
+"""
+
 import numpy as np
 
 # for building and training neural networks
