@@ -8,6 +8,44 @@ Usage:
     python 2dplot_new.py path/to/solution.plt figures/solution_t.png
 """
 
+"""
+Differences from 2plot.py
+-------------------------
+
+This script (`2dplot_new.py`) is an enhanced/production-ready version of the
+quick plotting script (`2plot.py`). Key differences and improvements:
+
+1. SOLUTIONTIME parsing
+   - `2dplot_new.py` reads the SOLUTIONTIME value from the 3rd header line of the
+     input PLT file and prints/displays it in the plot title (useful for time-series).
+   - `2plot.py` does not extract or show time information.
+
+2. Plot type
+   - `2dplot_new.py` uses `contourf` (filled contours) for smoother, publication-ready
+     color regions.
+   - `2plot.py` uses `contour` (line contours), which is faster for quick checks.
+
+3. Styling and presentation
+   - `2dplot_new.py` includes `set_plot_style()` to increase font sizes, line widths,
+     and use a serif font for higher-quality figures suitable for reports/overleaf.
+   - Colorbar orientation: `2dplot_new.py` uses a vertical colorbar (better for tall plots),
+     while `2plot.py` uses a horizontal one.
+
+4. Title & annotation
+   - `2dplot_new.py` shows the time in the title (e.g., "Solution at t=0.25"), making it
+     easier to compare snapshots from different timesteps.
+   - `2plot.py` uses a generic title "Solution".
+
+5. Use case
+   - `2dplot_new.py` is intended for final figures and report images (presentation/paper).
+   - `2plot.py` is intended for quick diagnostic visualization during development.
+
+Notes:
+- Both scripts share the same core logic (gridification of scattered x,y,value data).
+- If you plan to maintain both, keep `2plot.py` as a fast debug tool and `2dplot_new.py`
+  for producing final images for the README/Overleaf.
+"""
+
 import numpy as np
 from scipy.interpolate import griddata
 import matplotlib.pyplot as plt
