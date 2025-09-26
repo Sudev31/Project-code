@@ -1,3 +1,22 @@
+"""
+pinn_1d_advection.py
+
+1D PINN + FTBS comparison for the advection problem u_t + k u_x = f(x).
+
+What it does:
+- Builds and trains a small Keras PINN on collocation points (x,t).
+- Predicts PINN solution on a dense (x,t) grid and saves a heatmap.
+- Computes and plots analytical solution and absolute error heatmap.
+- Runs a simple FTBS finite-difference solver and compares time-slice plots
+  between FTBS, PINN, and exact solutions; saves PDFs and .txt data files.
+
+Usage:
+    python pinn_1d_advection.py
+Notes:
+- Training is currently short (epochs=15) for demo only; increase epochs for better PINN results.
+- The script mixes training, plotting and classical solver code in one file; consider modularizing later.
+"""
+
 import numpy as np
 
 # for building and training neural networks
