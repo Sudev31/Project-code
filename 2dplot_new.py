@@ -1,3 +1,13 @@
+"""
+Brief:
+    Read a PLT-like CSV file with a header that contains SOLUTIONTIME and
+    scatter (x,y,value) rows. Produce a filled contour plot (contourf)
+    with a title that includes the solution time.
+
+Usage:
+    python 2dplot_new.py path/to/solution.plt figures/solution_t.png
+"""
+
 import numpy as np
 from scipy.interpolate import griddata
 import matplotlib.pyplot as plt
