@@ -1,3 +1,19 @@
+"""
+pinn_2d_advection.py
+
+2D PINN for an advection-like PDE u_t + u_x + u_y = 0 (f=0).
+- Inputs: (x, y, t) triples.
+- Enforces PDE residual, Dirichlet boundary data on the four sides, and initial data at t=0.
+- Trains a Keras MLP and plots exact, PINN and absolute-error heatmaps at final time.
+
+Usage:
+    python pinn_2d_advection.py
+Notes:
+- This file mixes data gen, model, loss, training, and plotting in one script for convenience.
+- For large problems, consider batching, tf.function, and modularization (separate modules for data, model, loss, plotting).
+"""
+
+
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
