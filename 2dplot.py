@@ -1,3 +1,23 @@
+"""
+Brief:
+    Read a PLT-like CSV text file containing x,y,value rows and produce
+    a 2D contour plot saved to a figure file.
+
+Expected input file format:
+    - First 3 header lines are ignored (hence skiprows=3).
+    - After header, each line is comma-separated: x, y, value
+      Example:
+        # header line 1
+        # header line 2
+        # SOLUTIONTIME=0.1, other info
+        0.0,0.0, 1.234
+        0.1,0.0, 1.456
+
+
+Usage:
+    python 2plot.py path/to/solution.plt figures/solution.png
+"""
+
 import numpy as np
 from scipy.interpolate import griddata
 import matplotlib.pyplot as plt
